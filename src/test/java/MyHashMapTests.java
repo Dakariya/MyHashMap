@@ -3,7 +3,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+
+import java.util.*;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * The type My hash map tests.
@@ -21,6 +25,7 @@ public class MyHashMapTests {
     MyHashMap<String, String> sizedHashMap = new MyHashMap<>(5);
 
     MyHashMap<Integer, Integer> map = new MyHashMap<>();
+
 
     /**
      * Init.
@@ -115,6 +120,7 @@ public class MyHashMapTests {
         int actualResult = defaultHashMap.size();
         assertEquals(expectedResult, actualResult);
 
+
     }
 
     /**
@@ -150,4 +156,100 @@ public class MyHashMapTests {
         assertEquals(expectedResult,actualResult);
     }
 
+    @Test
+    public void testHashcode(){
+        Object obj1 = new Object();
+        Object obj2 = new Object();
+
+        assertNotEquals(obj1.hashCode(), obj2.hashCode());
+
+        assertEquals(obj1.hashCode(), obj1.hashCode());
+    }
+
+    @Test
+    public void size(){
+        MyHashMap <String,Integer> myHashMap = new MyHashMap<>();
+        int expectedResult = 0;
+        int actualResult = myHashMap.size();
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void testRemoveNotExcistKey() {
+
+        MyHashMap <String,Integer> myHashMap = new MyHashMap<>();
+        myHashMap.put("24", 4309);
+        myHashMap.put("34", 450);
+        Integer expectedResult = null;
+        Integer actualResult = myHashMap.remove("26");
+        assertEquals(expectedResult, actualResult);
+
+        }
+
+    @Test
+    public void testKeySet(){
+        MyHashMap <String,Integer> myHashMap = new MyHashMap<>();
+        myHashMap.put("24", 4309);
+        myHashMap.put("34", 450);
+        Set<String> expectedResult = new HashSet<>();
+        expectedResult.add("24");
+        expectedResult.add("34");
+        Set<String> actualResult = myHashMap.keySet();
+        assertEquals(expectedResult,actualResult);
+    }
+
+    @Test
+    public void testEntrySet(){
+        MyHashMap <String,Integer> myHashMap = new MyHashMap<>();
+        myHashMap.put("24", 4309);
+        myHashMap.put("34", 450);
+        Set<MyHashMap.Entry<String,Integer>> actualResult =  myHashMap.entrySet();
+        Set<MyHashMap.Entry<String, Integer>> expectedResult = new HashSet<>();
+        expectedResult.addAll(myHashMap.entrySet());
+        assertEquals(expectedResult,actualResult);
+    }
+
+    @Test
+    public void testValues(){
+        MyHashMap <String,Integer> myHashMap = new MyHashMap<>();
+        myHashMap.put("24", 4309);
+        myHashMap.put("34", 450);
+
+        Collection<Integer> expectedResult = new HashSet<>();
+        expectedResult.add(4309);
+        expectedResult.add(450);
+        Collection<Integer> actualResult = myHashMap.values();
+        assertEquals(expectedResult,actualResult);
+    }
+
+    @Test
+    public void testPutAll(){
+        MyHashMap <String,Integer> myHashMap = new MyHashMap<>();
+        myHashMap.put("24", 4309);
+        myHashMap.put("34", 450);
+        MyHashMap <String,Integer> actualResult = new MyHashMap<>();
+        actualResult.put("29", 4378);
+        actualResult.put("39", 48);
+        actualResult.putAll(myHashMap);
+        MyHashMap <String,Integer> expectedResult = new MyHashMap<>();
+        expectedResult.put("24", 4309);
+        expectedResult.put("34", 450);
+        expectedResult.put("29", 4378);
+        expectedResult.put("39", 48);
+        assertEquals(expectedResult.entrySet(), actualResult.entrySet());
+
+    }
+
+    @Test
+    public void testPutExistKey(){
+        MyHashMap <String,Integer> actualResult = new MyHashMap<>();
+        actualResult.put("24", 4309);
+        actualResult.put("34", 450);
+        actualResult.put("24", 75894);
+        MyHashMap <String,Integer> expectedResult = new MyHashMap<>();
+        expectedResult.put("24", 75894);
+        expectedResult.put("34", 450);
+        assertEquals(actualResult.entrySet(),expectedResult.entrySet());
+
+    }
 }

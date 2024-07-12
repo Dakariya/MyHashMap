@@ -1,10 +1,7 @@
 package com.zharnikova.example;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <h1>Создание и реализация своего HashMap</h1>
@@ -317,9 +314,12 @@ public class MyHashMap<K,V> implements Serializable {
      * @param m объект типа MyHashMap
      */
     public void putAll(MyHashMap<? extends K, ? extends V> m) {
-        Entry<K, V>[] table = getTable();
-        for (Entry<K, V> entry : table) {
-            put(entry.getKey(), entry.getValue());
+        if(m!=null && m.size() >0){
+        for (Entry<? extends K, ? extends V> entry : m.entrySet()) {
+            if(!containsKey(entry.getKey())){
+                this.put(entry.getKey(), entry.getValue());
+            }
+        }
         }
     }
 
@@ -435,7 +435,7 @@ public class MyHashMap<K,V> implements Serializable {
      * @param <K></K> ключ элемента
      * @param <V></V> значения элемента
      */
-    static class Entry<K, V> {
+    public static class Entry<K, V> {
         private K k;
         private V v;
         /**

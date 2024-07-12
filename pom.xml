@@ -20,6 +20,11 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.12</version>
+    </dependency>
     </dependencies>
 
     <build>
@@ -37,5 +42,23 @@
                 </executions>
             </plugin>
         </plugins>
+
     </build>
+
+        <reporting>
+            <plugins>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <reportSets>
+                        <reportSet>
+                            <reports>
+                                <!-- select non-aggregate reports -->
+                                <report>report</report>
+                            </reports>
+                        </reportSet>
+                    </reportSets>
+                </plugin>
+            </plugins>
+        </reporting>
 </project>
